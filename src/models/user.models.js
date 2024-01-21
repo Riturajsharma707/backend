@@ -1,7 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
-import { Jwt } from "jsonwebtoken";
+// import { Jwt } from "jsonwebtoken";
 import bcrypt from 'bcrypt';
+
+import jwt from 'jsonwebtoken';
 
 const userSchema = new Schema({
     username: {
@@ -20,7 +22,7 @@ const userSchema = new Schema({
         trim: true,
 
     },
-    fullname: {
+    fullName: {
         type: String,
         required: true,
         trim: true,
@@ -31,7 +33,7 @@ const userSchema = new Schema({
         required: true,
 
     },
-    coverimage: {
+    coverImage: {
         type: String, //cloudinary url
     },
     watchhistory: [
@@ -50,7 +52,7 @@ const userSchema = new Schema({
     }
 
 
-}, { timeseries: true })
+}, { timestamps: true })
 
 /* Hooks events
 
@@ -68,7 +70,7 @@ init (Synchronous)
 userSchema.pre("save", async function (next) {
     if (!this.isModified('password')) return next();
 
-    this.password = bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 })
 
