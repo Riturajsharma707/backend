@@ -1,3 +1,3 @@
 #Backend using javascript
 
-learning backend using javascipt
+learning backend using NodeJs
